@@ -10,7 +10,13 @@ object main extends App {
   args.toList match {
     case "cat" :: Nil =>
       // use Workshop.cat and text.utf8Decode to implement `cat`
-     ???
+      //     (stdInBytes >-).to
+      Process
+        .constant(4096)
+        .through(stdInBytes)
+        .through(stdOutBytes)
+        .run
+        .run
     case "yes" :: Nil =>
       // use Workshop.yes and text.utf8Decode to implement `yes`
       ???
@@ -43,7 +49,7 @@ object main extends App {
 object Workshop {
   // emit all values that you receive
   def cat[A]: Process1[A, A] =
-    ???
+  ??? //Process.await1
 
   // continuously emit the line "y"
   def yes: Process0[String] =
