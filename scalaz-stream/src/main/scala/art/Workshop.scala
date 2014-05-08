@@ -14,7 +14,8 @@ object main extends App {
       Process
         .constant(4096)
         .through(stdInBytes)
-        .through(stdOutBytes)
+        .pipe(Workshop.cat)
+        .to(stdOutBytes)
         .run
         .run
     case "yes" :: Nil =>
@@ -48,8 +49,7 @@ object main extends App {
 
 object Workshop {
   // emit all values that you receive
-  def cat[A]: Process1[A, A] =
-  ??? //Process.await1
+  def cat[A]: Process1[A, A] = Process.await1
 
   // continuously emit the line "y"
   def yes: Process0[String] =
