@@ -35,8 +35,7 @@ object main extends App {
         .through(stdInBytes)
         .pipe(text.utf8Decode)
         .pipe(Workshop.head)
-        .pipe(text.utf8Encode)
-        .to(stdOutBytes)
+        .to(io.stdOutLines)
         .run
         .run
 
