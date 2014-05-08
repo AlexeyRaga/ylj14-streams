@@ -70,14 +70,13 @@ object Workshop {
 
 
   // convert each chunk into lines, hint: process1.repartition
-  def lines: Process1[String, String] = Process.await1[String].repartition(x => x.split("\n"))
+  def lines: Process1[String, String] = cat[String].repartition(x => x.split("\n"))
 
   // just the first 10 lines (of arbitrary chunks), so don't forget to `lines` it)
   def head: Process1[String, String] = lines.take(10)
 
   // just the last 10 lines, hint: process1.scan
-  def tail: Process1[String, String] =
-    ???
+  def tail: Process1[String, String] = tailcat[String].buffer(10).last
 
   // just the strings that contain this term
   def grep(term: String): Process1[String, String] =
