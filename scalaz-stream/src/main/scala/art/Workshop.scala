@@ -59,7 +59,7 @@ object Workshop {
   def cat[A]: Process1[A, A] = Process.await1
 
   // continuously emit the line "y"
-  def yes: Process[Task, String] = Process.constant("y")
+  def yes: Process[Task, String] = Process.constant("y\n")
 
 
   // convert each chunk into lines, hint: process1.repartition
