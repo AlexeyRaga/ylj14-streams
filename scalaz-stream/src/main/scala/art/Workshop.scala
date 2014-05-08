@@ -30,7 +30,16 @@ object main extends App {
 
     case "head" :: Nil =>
       // use Workshop.head and text.utf8Decode to implement `head`
-     ???
+      Process
+        .constant(4096)
+        .through(stdInBytes)
+        .pipe(text.utf8Decode)
+        .pipe(Workshop.head)
+        .pipe(text.utf8Encode)
+        .to(stdOutBytes)
+        .run
+        .run
+
     case "tail" :: Nil =>
       // use Workshop.tail and text.utf8Decode to implement tail`
      ???
@@ -63,12 +72,10 @@ object Workshop {
 
 
   // convert each chunk into lines, hint: process1.repartition
-  def lines: Process1[String, String] =
-    ???
+  def lines: Process1[String, String] = Process.await1[String].repartition(x => x.split("\n"))
 
   // just the first 10 lines (of arbitrary chunks), so don't forget to `lines` it)
-  def head: Process1[String, String] =
-    ???
+  def head: Process1[String, String] = lines.take(10)
 
   // just the last 10 lines, hint: process1.scan
   def tail: Process1[String, String] =
