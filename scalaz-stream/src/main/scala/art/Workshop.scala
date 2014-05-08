@@ -10,7 +10,6 @@ object main extends App {
   args.toList match {
     case "cat" :: Nil =>
       // use Workshop.cat and text.utf8Decode to implement `cat`
-      //     (stdInBytes >-).to
       Process
         .constant(4096)
         .through(stdInBytes)
@@ -20,9 +19,15 @@ object main extends App {
         .to(stdOutBytes)
         .run
         .run
+
     case "yes" :: Nil =>
       // use Workshop.yes and text.utf8Decode to implement `yes`
-      ???
+      Workshop.yes
+        .pipe(text.utf8Encode)
+        .to(stdOutBytes)
+        .run
+        .run
+
     case "head" :: Nil =>
       // use Workshop.head and text.utf8Decode to implement `head`
      ???
@@ -54,8 +59,8 @@ object Workshop {
   def cat[A]: Process1[A, A] = Process.await1
 
   // continuously emit the line "y"
-  def yes: Process0[String] =
-    ???
+  def yes: Process[Task, String] = Process.constant("y")
+
 
   // convert each chunk into lines, hint: process1.repartition
   def lines: Process1[String, String] =
