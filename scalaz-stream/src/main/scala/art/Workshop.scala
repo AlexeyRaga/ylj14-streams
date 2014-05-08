@@ -76,7 +76,7 @@ object Workshop {
   def head: Process1[String, String] = lines.take(10)
 
   // just the last 10 lines, hint: process1.scan
-  def tail: Process1[String, String] = tailcat[String].buffer(10).last
+  def tail: Process1[String, String] = cat[String].buffer(10).last
 
   // just the strings that contain this term
   def grep(term: String): Process1[String, String] =
