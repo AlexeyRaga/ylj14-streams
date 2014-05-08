@@ -14,7 +14,9 @@ object main extends App {
       Process
         .constant(4096)
         .through(stdInBytes)
+        .pipe(text.utf8Decode)
         .pipe(Workshop.cat)
+        .pipe(text.utf8Encode)
         .to(stdOutBytes)
         .run
         .run
