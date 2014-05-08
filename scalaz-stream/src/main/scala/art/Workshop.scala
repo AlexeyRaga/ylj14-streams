@@ -23,8 +23,7 @@ object main extends App {
     case "yes" :: Nil =>
       // use Workshop.yes and text.utf8Decode to implement `yes`
       Workshop.yes
-        .pipe(text.utf8Encode)
-        .to(stdOutBytes)
+        .to(io.stdOutLines)
         .run
         .run
 
@@ -67,7 +66,7 @@ object Workshop {
   def cat[A]: Process1[A, A] = Process.await1
 
   // continuously emit the line "y"
-  def yes: Process[Task, String] = Process.constant("y\n")
+  def yes: Process[Task, String] = Process.constant("y")
 
 
   // convert each chunk into lines, hint: process1.repartition
